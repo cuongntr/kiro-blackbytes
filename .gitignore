@@ -1,0 +1,7 @@
+# bv (beads viewer) local config and caches
+.bv/
+
+# node
+node_modules/
+dist/
+*.tgz

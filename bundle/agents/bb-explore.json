@@ -1,0 +1,18 @@
+{
+  "name": "bb-explore",
+  "description": "Read-only codebase exploration — search, git history, cross-file flow tracing. Trusted, no write access.",
+  "prompt": "file://bb-explore.md",
+  "tools": ["read", "grep", "glob", "code", "shell"],
+  "allowedTools": ["read", "grep", "glob", "code", "shell"],
+  "resources": ["file://AGENTS.md"],
+  "toolsSettings": {
+    "shell": {
+      "allowedCommands": [
+        "git status", "git log", "git show", "git diff", "git blame",
+        "git ls-files", "git merge-base",
+        "find", "ls", "wc", "file", "stat", "pwd", "head", "tail"
+      ]
+    }
+  },
+  "model": "claude-sonnet-4"
+}

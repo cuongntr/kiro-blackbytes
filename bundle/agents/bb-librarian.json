@@ -1,0 +1,8 @@
+{
+  "name": "bb-librarian",
+  "description": "External-only research agent — web search, docs, knowledge base. No local file access. NOT trusted (needs user approval to spawn).",
+  "prompt": "file://bb-librarian.md",
+  "tools": ["web_search", "web_fetch", "knowledge", "tool_search", "thinking"],
+  "allowedTools": ["web_search", "web_fetch", "knowledge", "tool_search", "thinking"],
+  "model": "claude-sonnet-4"
+}

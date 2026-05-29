@@ -1,0 +1,17 @@
+{
+  "name": "bb-reviewer",
+  "description": "Read-only code reviewer — self-fetches diff via git, severity-classified findings (High/Medium/Low), verdict. Trusted.",
+  "prompt": "file://bb-reviewer.md",
+  "tools": ["read", "grep", "glob", "code", "thinking", "shell"],
+  "allowedTools": ["read", "grep", "glob", "code", "thinking", "shell"],
+  "resources": ["file://AGENTS.md"],
+  "toolsSettings": {
+    "shell": {
+      "allowedCommands": [
+        "git status", "git diff", "git merge-base", "git show",
+        "git log", "git ls-files"
+      ]
+    }
+  },
+  "model": "claude-sonnet-4"
+}

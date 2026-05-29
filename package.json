@@ -1,0 +1,26 @@
+{
+  "name": "kiro-blackbytes",
+  "version": "0.1.0",
+  "description": "Install, update, and list a bundle of reusable Kiro settings (agents, prompts, steering) into ~/.kiro/.",
+  "type": "module",
+  "bin": {
+    "kiro-blackbytes": "dist/cli.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "files": ["dist", "bundle"],
+  "scripts": {
+    "build": "tsc",
+    "lint": "biome check .",
+    "test": "npm run build && node --test \"test/**/*.test.mjs\"",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.2"
+  }
+}

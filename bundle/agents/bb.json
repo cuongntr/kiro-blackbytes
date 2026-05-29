@@ -1,0 +1,15 @@
+{
+  "name": "bb",
+  "description": "Orchestrator — routes tasks to specialized subagents (explore, oracle, librarian, reviewer) or handles directly.",
+  "prompt": "file://bb.md",
+  "tools": ["read", "write", "shell", "grep", "glob", "code", "thinking", "todo", "introspect", "knowledge", "subagent", "web_search", "web_fetch", "tool_search"],
+  "allowedTools": ["read", "grep", "glob", "code", "thinking", "todo", "introspect", "knowledge", "subagent", "tool_search"],
+  "resources": ["file://AGENTS.md"],
+  "toolsSettings": {
+    "subagent": {
+      "availableAgents": ["bb-explore", "bb-oracle", "bb-librarian", "bb-reviewer"],
+      "trustedAgents": ["bb-explore", "bb-oracle", "bb-reviewer"]
+    }
+  },
+  "model": "claude-sonnet-4"
+}
