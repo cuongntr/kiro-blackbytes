@@ -22,7 +22,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "biome check .",
-    "test": "npm run build && node --test \"test/**/*.test.mjs\"",
+    "test": "npm run build && node --test test/*.test.mjs",
     "prepack": "npm run build",
     "prepublishOnly": "npm run build"
   },
