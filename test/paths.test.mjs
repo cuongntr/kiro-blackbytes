@@ -28,7 +28,7 @@ test("targetDir and lockfilePath resolve under home", () => {
 
 test("assertInsideKiroHome passes for normal target", () => {
   process.env.KIRO_HOME = "/tmp/kh";
-  assert.doesNotThrow(() => assertInsideKiroHome("/tmp/kh/agents/bb.json"));
+  assert.doesNotThrow(() => assertInsideKiroHome("/tmp/kh/agents/Bytes.json"));
 });
 
 test("assertInsideKiroHome rejects path escapes", () => {

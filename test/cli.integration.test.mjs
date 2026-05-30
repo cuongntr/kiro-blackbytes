@@ -29,7 +29,7 @@ test("init on empty home installs files and lockfile, exit 0", () => {
   const r = run(["init"]);
   assert.equal(r.status, 0);
   assert.match(r.stdout, /init/);
-  assert.ok(existsSync(join(home, "agents", "bb.json")));
+  assert.ok(existsSync(join(home, "agents", "Bytes.json")));
   assert.ok(existsSync(join(home, "prompts", "review.md")));
   assert.ok(existsSync(join(home, "steering", "engineering-conventions.md")));
   assert.ok(existsSync(join(home, ".kiro-blackbytes.json")));
@@ -51,7 +51,7 @@ test("list after init marks installed and shows version", () => {
 
 test("hand-edit then update restores file and reports updated", () => {
   run(["init"]);
-  const target = join(home, "agents", "bb.json");
+  const target = join(home, "agents", "Bytes.json");
   const original = readFileSync(target, "utf8");
   writeFileSync(target, "LOCAL EDIT");
   const r = run(["update"]);

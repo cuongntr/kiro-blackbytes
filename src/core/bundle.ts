@@ -5,7 +5,7 @@ import { type ConfigType, targetDir } from "./paths.js";
 
 export interface BundleFile {
   type: ConfigType;
-  /** Path relative to the type's target dir, forward-slash separators (e.g. "bb.json"). */
+  /** Path relative to the type's target dir, forward-slash separators (e.g. "Bytes.json"). */
   relPath: string;
   /** Absolute source path inside the package bundle/. */
   absSource: string;
@@ -64,7 +64,7 @@ export function enumerate(root: string = bundleRoot()): BundleFile[] {
   return files;
 }
 
-/** Lockfile-style relative path for a bundle file (e.g. "agents/bb.json"). */
+/** Lockfile-style relative path for a bundle file (e.g. "agents/Bytes.json"). */
 export function lockKey(file: BundleFile): string {
   return `${file.type}/${file.relPath}`;
 }

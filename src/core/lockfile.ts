@@ -8,7 +8,7 @@ export interface Lockfile {
   schema: number;
   version: string;
   updatedAt: string;
-  /** Relative paths (forward-slash separators), e.g. "agents/bb.json". */
+  /** Relative paths (forward-slash separators), e.g. "agents/Bytes.json". */
   files: string[];
 }
 

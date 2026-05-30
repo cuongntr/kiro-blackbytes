@@ -1,7 +1,7 @@
 {
-  "name": "bb-oracle",
+  "name": "oracle",
   "description": "Read-only reasoning specialist — hard debugging, architecture decisions, security analysis. Trusted, no write/shell/web.",
-  "prompt": "file://bb-oracle.md",
+  "prompt": "file://oracle.md",
   "tools": ["read", "grep", "glob", "code", "thinking"],
   "allowedTools": ["read", "grep", "glob", "code", "thinking"],
   "resources": ["file://AGENTS.md"],

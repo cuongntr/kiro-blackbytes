@@ -14,8 +14,8 @@ these are crafted by hand and live only on one machine. There is no first-class
 way to package a curated set of these and reinstall it on a new machine, share
 it with a teammate, or keep an installed copy in sync as the source evolves.
 
-The author already maintains a working set of agents (`bb`, `bb-explore`,
-`bb-oracle`, `bb-reviewer`, `bb-librarian`) and wants them — together with
+The author already maintains a working set of agents (`Bytes`, `explore`,
+`oracle`, `reviewer`, `librarian`, `general`) and wants them — together with
 prompts and steering — to be installable in one command and updatable when the
 source changes. Doing this manually (copy files, track which ones, re-copy on
 change) is error-prone and does not scale to sharing.
@@ -94,7 +94,7 @@ install, always-current).
 | ID | Priority | Requirement | Acceptance Criteria |
 |---|---|---|---|
 | REQ-001 | P0 | `init` (default command) installs all bundled agents, prompts, and steering into `~/.kiro/`. | Running `npx kiro-blackbytes` with an empty `~/.kiro/` results in every bundled agent `.json` (+ its `.md`) present in `~/.kiro/agents/`, every bundled prompt `.md` present in `~/.kiro/prompts/`, and every bundled steering `.md` present under `~/.kiro/steering/`, with identical content to the source. Missing target directories are created. |
-| REQ-002 | P0 | `init`/`update` overwrites files the tool previously installed, but never deletes or overwrites files it did not install. | Given a user-authored `~/.kiro/agents/mine.json` not in the bundle, after `init` and `update` that file is byte-for-byte unchanged. Given a bundled `bb.json` the user later hand-edited, `update` overwrites it back to the bundled content (override semantics, per scope decision). |
+| REQ-002 | P0 | `init`/`update` overwrites files the tool previously installed, but never deletes or overwrites files it did not install. | Given a user-authored `~/.kiro/agents/mine.json` not in the bundle, after `init` and `update` that file is byte-for-byte unchanged. Given a bundled `Bytes.json` the user later hand-edited, `update` overwrites it back to the bundled content (override semantics, per scope decision). |
 | REQ-003 | P0 | The tool records what it installed in a lockfile at `~/.kiro/.kiro-blackbytes.json`. | After `init`, the lockfile exists and lists the package version and the relative path of every file the tool wrote. |
 | REQ-004 | P0 | `update` re-syncs installed files to the current package version and reports a per-file outcome. | After bumping the bundle and running `update`, changed bundled files are overwritten, newly added bundled files are written, and the command output classifies each file as added / updated / unchanged. The lockfile reflects the new version and current file set. |
 | REQ-005 | P0 | `list` shows bundle contents and install status. | Output enumerates each bundled agent, prompt, and steering file, marks each as installed or not (based on the lockfile / target presence), and shows the bundle version. Exit code 0. |

@@ -1,6 +1,6 @@
 {
   "name": "kiro-blackbytes",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Install, update, and list a bundle of reusable Kiro settings (agents, prompts, steering) into ~/.kiro/.",
   "type": "module",
   "bin": {
@@ -18,7 +18,10 @@
   "bugs": {
     "url": "https://github.com/cuongntr/kiro-blackbytes/issues"
   },
-  "files": ["dist", "bundle"],
+  "files": [
+    "dist",
+    "bundle"
+  ],
   "scripts": {
     "build": "tsc",
     "lint": "biome check .",

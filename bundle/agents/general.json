@@ -1,0 +1,9 @@
+{
+  "name": "general",
+  "description": "Implementation executor — heavy multi-file changes, refactors, boilerplate from a concrete plan. Full read/write/shell access except spawning subagents. NOT trusted (needs user approval to spawn).",
+  "prompt": "file://general.md",
+  "tools": ["read", "write", "shell", "grep", "glob", "code", "thinking", "todo", "knowledge", "web_search", "web_fetch", "tool_search"],
+  "allowedTools": ["read", "write", "shell", "grep", "glob", "code", "thinking", "todo", "knowledge", "web_search", "web_fetch", "tool_search"],
+  "resources": ["file://AGENTS.md"],
+  "model": "claude-sonnet-4"
+}

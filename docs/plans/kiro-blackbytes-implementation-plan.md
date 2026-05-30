@@ -173,7 +173,7 @@ destination resolved via `paths.ts`.
 - Returns one entry per matching file across the three subdirs.
 - Steering nesting preserved in `relPath` and `target`.
 - Non-`.md`/`.json` files (and stray files at `bundle/` root) are ignored.
-- `relPath` is bundle-type-relative; lockfile-style rel path (`agents/bb.json`)
+- `relPath` is bundle-type-relative; lockfile-style rel path (`agents/Bytes.json`)
   derivable.
 - Resolves correctly whether run from `dist/` or via npx (bundle path anchored to
   package root, not cwd).
@@ -270,8 +270,8 @@ print message to stderr + exit non-zero (REQ-007). Success → exit 0.
 ### T-010 — Seed `bundle/` with real agents + sample prompt/steering
 **Epic**: E4. **Depends on**: T-005. **Est**: ~0.5d.
 
-Populate the shipped bundle. Copy the author's existing agents (`bb`,
-`bb-explore`, `bb-oracle`, `bb-reviewer`, `bb-librarian` — each `.json` + `.md`)
+Populate the shipped bundle. Copy the author's existing agents (`Bytes`,
+`explore`, `oracle`, `reviewer`, `librarian`, `general` — each `.json` + `.md`)
 from `~/.kiro/agents/` into `bundle/agents/`. Add at least one sample
 `bundle/prompts/*.md` and one `bundle/steering/*.md` so all three types are
 exercised. Verify agent prompt `file://` references still resolve once installed
@@ -280,7 +280,7 @@ exercised. Verify agent prompt `file://` references still resolve once installed
 **Files**: `bundle/agents/*.{json,md}`, `bundle/prompts/*.md`,
 `bundle/steering/*.md`.
 **AC**:
-- All five agents present as `.json`+`.md` pairs in `bundle/agents/`.
+- All six agents (`Bytes` + `explore`/`oracle`/`reviewer`/`librarian`/`general`) present as `.json`+`.md` pairs in `bundle/agents/`.
 - ≥1 prompt and ≥1 steering file present.
 - Agent JSON is valid; any `prompt` `file://` path is consistent with the
   installed location (does not point at a machine-specific absolute path that
@@ -313,20 +313,24 @@ to build.
 
 ---
 
-### T-012 — Unit tests: paths, lockfile, bundle
-**Epic**: E5. **Depends on**: T-003, T-004, T-005. **Est**: ~0.5d.
+### T-012 — Unit tests: paths, lockfile, bundle, agents schema
+**Epic**: E5. **Depends on**: T-003, T-004, T-005, T-010. **Est**: ~0.5d.
 
-`node:test` units for the three core modules. Use a `mkdtemp` dir as `KIRO_HOME`
-and a small fixture bundle dir; no `fs` mocking.
+`node:test` units for the three core modules plus a schema check of the real
+shipped agents. Use a `mkdtemp` dir as `KIRO_HOME` and a small fixture bundle dir;
+no `fs` mocking.
 
-**Files**: `test/paths.test.ts`, `test/lockfile.test.ts`, `test/bundle.test.ts`,
-`test/fixtures/bundle/**` (tiny).
+**Files**: `test/paths.test.mjs`, `test/lockfile.test.mjs`, `test/bundle.test.mjs`,
+`test/agents.schema.test.mjs`, `test/helpers.mjs` (fixture bundle).
 **AC**:
 - paths: KIRO_HOME override, fallback, containment assert (reject `..` escape and
   `skills/`).
 - lockfile: missing→empty, valid parse, malformed/bad-schema throw, atomic write
   round-trip.
 - bundle: enumeration types/targets, steering nesting, ignores non-`.md`/`.json`.
+- agents schema: every shipped agent uses known Kiro tool names, `allowedTools ⊆
+  tools`, `prompt` `file://` refs resolve, subagent refs point at bundled agents,
+  and each subagent satisfies `allowedTools == tools` (orchestrator exempt).
 - `npm test` runs these and passes.
 **DoD**: tests pass; `npm test` wired to `node --test`.
 **Ref**: design §9 (unit cases, test seam).
@@ -399,7 +403,7 @@ the override behavior (Q-002).
 
 | ID | Question | Owner | Status | Blocks |
 |---|---|---|---|---|
-| PQ-001 | Confirm the exact set of agents to bundle (all five bb-* + bb, or a subset?). | invoker | Open — assume all five + bb until told otherwise. | T-010 (non-blocking; default assumption lets work proceed). |
+| PQ-001 | Confirm the exact set of agents to bundle. | invoker | Resolved — `Bytes` orchestrator + five subagents (`explore`, `oracle`, `reviewer`, `librarian`, `general`). | T-010 (closed). |
 | PQ-002 | npm package publish access / scope (publish as unscoped `kiro-blackbytes`?). | invoker | Deferred — not needed until actual publish; out of Phase 1 build scope. | none in-phase. |
 
 ## Revision History
@@ -407,3 +411,5 @@ the override behavior (Q-002).
 | Date | Author | Change |
 |---|---|---|
 | 2026-05-29 | invoker (via feature-workflow) | Initial Phase 1 MVP plan: 5 epics, 14 leaf tasks with deps, DoD, test strategy, risks. Ready for bead conversion. |
+| 2026-05-30 | invoker | Added `general` implementation-executor subagent (six agents total). Resolved PQ-001; updated T-010 AC. |
+| 2026-05-30 | invoker | Renamed agents: dropped `bb-` prefix; orchestrator `bb` → `Bytes`. |

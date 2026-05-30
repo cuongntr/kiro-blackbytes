@@ -68,11 +68,12 @@ Static data shipped in the npm tarball, rooted at `bundle/`:
 ```
 bundle/
 ├── agents/
-│   ├── bb.json
-│   ├── bb.md
-│   ├── bb-explore.json
-│   ├── bb-explore.md
-│   └── ...                  (each agent: <name>.json, optional <name>.md)
+│   ├── Bytes.json
+│   ├── Bytes.md
+│   ├── explore.json
+│   ├── explore.md
+│   └── ...                  (oracle, reviewer, librarian, general;
+│                              each agent: <name>.json, optional <name>.md)
 ├── prompts/
 │   └── *.md
 └── steering/
@@ -105,8 +106,8 @@ same dir + `rename`). It is the record of "files this tool owns".
   "version": "1.2.0",
   "updatedAt": "2026-05-29T06:56:00.000Z",
   "files": [
-    "agents/bb.json",
-    "agents/bb.md",
+    "agents/Bytes.json",
+    "agents/Bytes.md",
     "prompts/review.md",
     "steering/global/style.md"
   ]
@@ -244,6 +245,13 @@ minimal-dependency goal. Alternative `vitest` noted in §10.
     fixture bundles. Cases: empty home → all ADDED; re-run → all UNCHANGED;
     user-authored file not in bundle → untouched; hand-edited owned file →
     UPDATED/OVERWRITTEN; bundle file removed → ORPHANED, left on disk.
+  - `agents schema`: validate the real shipped `bundle/agents/*.json` against
+    Kiro's agent schema — every `tools`/`allowedTools` entry is a known built-in
+    tool, `allowedTools ⊆ tools`, `prompt` `file://` refs are bare-relative and
+    resolve on disk, and `toolsSettings.subagent` references point at agents that
+    ship in the bundle. Also enforces the subagent invariant `allowedTools ==
+    tools` (a spawned subagent runs non-interactively and fails fast on a tool
+    that needs approval); the orchestrator that holds `subagent` is exempt.
 - **Integration**: invoke the built CLI end-to-end against a temp home dir;
   assert exit codes, stdout summaries, and resulting file tree for
   `init` → `update` → `list`.
