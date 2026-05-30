@@ -4,6 +4,6 @@
   "prompt": "file://general.md",
   "tools": ["read", "write", "shell", "grep", "glob", "code", "thinking", "todo", "knowledge", "web_search", "web_fetch", "tool_search"],
   "allowedTools": ["read", "write", "shell", "grep", "glob", "code", "thinking", "todo", "knowledge", "web_search", "web_fetch", "tool_search"],
-  "resources": ["file://AGENTS.md"],
+  "resources": ["file://AGENTS.md", "skill://~/.agents/skills/**/SKILL.md"],
   "model": "claude-sonnet-4.6"
 }

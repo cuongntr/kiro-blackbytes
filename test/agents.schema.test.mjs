@@ -111,6 +111,19 @@ for (const { file, name } of agents) {
       assert.ok(existsSync(join(agentsDir, ref)), `${file}: prompt file missing (${ref})`);
     }
 
+    // Resources must use a known URI scheme. Skills are exposed to custom agents
+    // ONLY when declared here via skill:// (auto-load applies to kiro_default
+    // alone), so a typo'd scheme silently strips an agent's skill access.
+    // Source: kiro.dev/docs/cli custom-agents configuration reference
+    // (skill:// progressive-load, file:// eager-load) — verified 2026-05-30.
+    for (const r of a.resources ?? []) {
+      assert.equal(typeof r, "string", `${file}: resource must be a string`);
+      assert.ok(
+        /^(file|skill|knowledge):\/\//.test(r),
+        `${file}: resource "${r}" must use a file://, skill://, or knowledge:// scheme`,
+      );
+    }
+
     // Subagent references must point at agents that ship in this bundle.
     const sub = a.toolsSettings?.subagent;
     if (sub) {

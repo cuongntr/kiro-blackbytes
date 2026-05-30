@@ -4,6 +4,6 @@
   "prompt": "file://oracle.md",
   "tools": ["read", "grep", "glob", "code", "thinking"],
   "allowedTools": ["read", "grep", "glob", "code", "thinking"],
-  "resources": ["file://AGENTS.md"],
+  "resources": ["file://AGENTS.md", "skill://~/.agents/skills/**/SKILL.md"],
   "model": "claude-opus-4.8"
 }

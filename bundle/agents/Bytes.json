@@ -4,7 +4,7 @@
   "prompt": "file://Bytes.md",
   "tools": ["read", "write", "shell", "grep", "glob", "code", "thinking", "todo", "introspect", "knowledge", "subagent", "web_search", "web_fetch", "tool_search"],
   "allowedTools": ["read", "grep", "glob", "code", "thinking", "todo", "introspect", "knowledge", "subagent", "tool_search"],
-  "resources": ["file://AGENTS.md"],
+  "resources": ["file://AGENTS.md", "skill://~/.agents/skills/**/SKILL.md"],
   "toolsSettings": {
     "subagent": {
       "availableAgents": ["explore", "oracle", "librarian", "reviewer", "general"],

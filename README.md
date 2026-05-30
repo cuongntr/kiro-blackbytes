@@ -76,6 +76,16 @@ route each turn. Kiro has no separate reasoning-effort setting — model choice 
 reasoning-depth control. An unknown model ID falls back to the default with a warning, so
 the agents-schema test pins every shipped ID to a confirmed allowlist.
 
+**Skills.** Kiro auto-loads skills only into its built-in `kiro_default` agent, so the
+custom agents in this bundle would otherwise have no skill access. Every agent that can
+touch local context therefore declares `"skill://~/.agents/skills/**/SKILL.md"` in its
+`resources`, which loads each skill's name + description at startup and the full `SKILL.md`
+on demand (progressive disclosure). Only `librarian` omits it — it is external-only by
+design and reaches no local files. The path points at `~/.agents/skills/` (the canonical
+skill store that `~/.kiro/skills/` symlinks back to), so it resolves the same regardless of
+workspace. Drop new skills there and they become available to every skill-enabled agent
+with no config change.
+
 ## Prompts and steering
 
 - `review` (`~/.kiro/prompts/review.md`) — a code-review template that groups findings by
