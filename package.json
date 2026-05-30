@@ -18,10 +18,7 @@
   "bugs": {
     "url": "https://github.com/cuongntr/kiro-blackbytes/issues"
   },
-  "files": [
-    "dist",
-    "bundle"
-  ],
+  "files": ["dist", "bundle"],
   "scripts": {
     "build": "tsc",
     "lint": "biome check .",

@@ -47,14 +47,14 @@ Skills are managed separately (e.g. `npx skills add`).
 specialized subagent that fits, runs up to four in parallel, or handles small work itself.
 The five subagents are scoped to exactly the tools their role needs:
 
-| Agent       | Role                  | Access                                   | Spawn |
-| ----------- | --------------------- | ---------------------------------------- | ----- |
-| `Bytes`     | Orchestrator          | Read/write/shell + `subagent` (interactive) | —     |
-| `explore`   | Codebase exploration  | Read-only + read-only `shell` (git, ls, find) | Trusted |
-| `oracle`    | Reasoning & analysis  | Read-only (no shell, no web)             | Trusted |
-| `reviewer`  | Code review + verdict | Read-only + read-only `git` shell        | Trusted |
-| `librarian` | External research     | Web search/fetch only, no local files    | Approval |
-| `general`   | Implementation executor | Full read/write/shell, no `subagent`   | Approval |
+| Agent       | Role                  | Access                                   | Model | Spawn |
+| ----------- | --------------------- | ---------------------------------------- | ----- | ----- |
+| `Bytes`     | Orchestrator          | Read/write/shell + `subagent` (interactive) | `auto` | — |
+| `explore`   | Codebase exploration  | Read-only + read-only `shell` (git, ls, find) | `claude-haiku-4.5` | Trusted |
+| `oracle`    | Reasoning & analysis  | Read-only (no shell, no web)             | `claude-opus-4.8` | Trusted |
+| `reviewer`  | Code review + verdict | Read-only + read-only `git` shell        | `claude-opus-4.8` | Trusted |
+| `librarian` | External research     | Web search/fetch only, no local files    | `claude-sonnet-4.6` | Approval |
+| `general`   | Implementation executor | Full read/write/shell, no `subagent`   | `claude-sonnet-4.6` | Approval |
 
 **Spawn approval.** `explore`, `oracle`, and `reviewer` are *trusted* — `Bytes` spawns them
 without prompting. `librarian` and `general` require explicit user approval to spawn,
@@ -67,6 +67,14 @@ read-only `explore` and `reviewer` agents restrict `shell` to a regex allowlist 
 read-only commands with `denyByDefault` so writes are blocked, not merely prompted. `Bytes`
 is the exception: it runs interactively, so its write/shell tools prompt for confirmation
 as usual.
+
+**Model selection.** Each agent pins a Kiro model ID matched to its job: the high-volume
+read-only `explore` runs on cheap `claude-haiku-4.5`; the judgment-heavy `oracle` and
+`reviewer` run on `claude-opus-4.8`; the executor `general` and the research `librarian`
+run on balanced `claude-sonnet-4.6`; and the `Bytes` orchestrator uses `auto` to let Kiro
+route each turn. Kiro has no separate reasoning-effort setting — model choice *is* the
+reasoning-depth control. An unknown model ID falls back to the default with a warning, so
+the agents-schema test pins every shipped ID to a confirmed allowlist.
 
 ## Prompts and steering
 

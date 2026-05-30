@@ -34,6 +34,29 @@ const KIRO_TOOLS = new Set([
   "web_fetch",
 ]);
 
+// Model IDs confirmed against Kiro's model service via the `/model` command.
+// Kiro fails SOFT on an unknown model ID (silent fallback to the default model +
+// a warning), so an unverified or typo'd ID would ship green and quietly
+// downgrade every install. Adding a new ID here is a deliberate gate: confirm it
+// exists via `/model` before listing it. Source: kiro.dev/docs/cli custom-agents
+// configuration reference + kiro.dev/docs/models (verified 2026-05-30).
+const CONFIRMED_KIRO_MODELS = new Set([
+  "auto",
+  "claude-opus-4.8",
+  "claude-opus-4.7",
+  "claude-opus-4.6",
+  "claude-opus-4.5",
+  "claude-sonnet-4.6",
+  "claude-sonnet-4.5",
+  "claude-sonnet-4",
+  "claude-haiku-4.5",
+  "deepseek-3.2",
+  "minimax-m2.5",
+  "minimax-m2.1",
+  "glm-5",
+  "qwen3-coder-next",
+]);
+
 function agentJsonFiles() {
   return readdirSync(agentsDir)
     .filter((f) => f.endsWith(".json"))
@@ -71,6 +94,14 @@ for (const { file, name } of agents) {
     // allowedTools must be a subset of tools (cannot auto-approve an absent tool).
     for (const t of allowed) {
       assert.ok(tools.includes(t), `${file}: allowedTools "${t}" not in tools`);
+    }
+
+    // model, when set, must be an ID we have confirmed exists (Kiro fails soft).
+    if (a.model !== undefined) {
+      assert.ok(
+        CONFIRMED_KIRO_MODELS.has(a.model),
+        `${file}: unconfirmed model "${a.model}" (verify via /model, then add to CONFIRMED_KIRO_MODELS)`,
+      );
     }
 
     // prompt file:// references must be bare-relative and resolve on disk.

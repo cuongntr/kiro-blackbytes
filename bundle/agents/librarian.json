@@ -4,5 +4,5 @@
   "prompt": "file://librarian.md",
   "tools": ["web_search", "web_fetch", "knowledge", "tool_search", "thinking"],
   "allowedTools": ["web_search", "web_fetch", "knowledge", "tool_search", "thinking"],
-  "model": "claude-sonnet-4"
+  "model": "claude-sonnet-4.6"
 }

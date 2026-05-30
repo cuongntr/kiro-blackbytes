@@ -11,5 +11,5 @@
       "trustedAgents": ["explore", "oracle", "reviewer"]
     }
   },
-  "model": "claude-sonnet-4"
+  "model": "auto"
 }
